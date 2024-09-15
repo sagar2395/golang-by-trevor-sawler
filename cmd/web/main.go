@@ -3,7 +3,9 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
+	"github.com/alexedwards/scs/v2"
 	"github.com/sagar2395/golang-by-trevor-sawler/pkg/config"
 	"github.com/sagar2395/golang-by-trevor-sawler/pkg/handlers"
 	"github.com/sagar2395/golang-by-trevor-sawler/pkg/render"
@@ -11,8 +13,19 @@ import (
 
 const portNumber = ":8090"
 
+var app config.AppConfig
+var session *scs.SessionManager
+
 func main() {
 	var app config.AppConfig
+
+	session = scs.New()
+	session.Lifetime = 24 * time.Hour
+	session.Cookie.Persist = true
+	session.Cookie.SameSite = http.SameSiteLaxMode
+	session.Cookie.Secure = app.InProduction
+
+	app.Session = session
 
 	tc, err := render.CreateTemplateCacheApproach2()
 

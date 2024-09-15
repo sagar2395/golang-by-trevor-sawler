@@ -78,6 +78,12 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
+func AddDefaultData(td *models.TemplateData) *models.TemplateData {
+	// Add all the data which should be added by default to the page
+
+	return td
+}
+
 func RenderTemplatesApproach2(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
 	// Create a template Cache
 	// tc, err := CreateTemplateCacheApproach2()
@@ -101,6 +107,8 @@ func RenderTemplatesApproach2(w http.ResponseWriter, tmpl string, td *models.Tem
 	}
 
 	buf := new(bytes.Buffer)
+
+	td = AddDefaultData(td)
 
 	err := t.Execute(buf, td)
 	if err != nil {
