@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 
 	"github.com/sagar2395/golang-by-trevor-sawler/pkg/config"
+	"github.com/sagar2395/golang-by-trevor-sawler/pkg/models"
 )
 
 func RenderTemplatesTest(w http.ResponseWriter, tmpl string) {
@@ -77,7 +78,7 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
-func RenderTemplatesApproach2(w http.ResponseWriter, tmpl string) {
+func RenderTemplatesApproach2(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
 	// Create a template Cache
 	// tc, err := CreateTemplateCacheApproach2()
 	// if err != nil {
@@ -101,7 +102,7 @@ func RenderTemplatesApproach2(w http.ResponseWriter, tmpl string) {
 
 	buf := new(bytes.Buffer)
 
-	err := t.Execute(buf, nil)
+	err := t.Execute(buf, td)
 	if err != nil {
 		log.Println(err)
 	}

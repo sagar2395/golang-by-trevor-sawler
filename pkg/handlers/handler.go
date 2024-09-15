@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/sagar2395/golang-by-trevor-sawler/pkg/config"
+	"github.com/sagar2395/golang-by-trevor-sawler/pkg/models"
 	"github.com/sagar2395/golang-by-trevor-sawler/pkg/render"
 )
 
@@ -29,10 +30,14 @@ func NewHandlers(r *Repository) {
 // this is handler for home page
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Home function")
-	render.RenderTemplatesApproach2(w, "home.page.tmpl")
+	render.RenderTemplatesApproach2(w, "home.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("About function")
-	render.RenderTemplatesApproach2(w, "about.page.tmpl")
+	stringMap := make(map[string]string)
+	stringMap["test"] = "hello, again"
+	render.RenderTemplatesApproach2(w, "about.page.tmpl", &models.TemplateData{
+		StringMap: stringMap,
+	})
 }
